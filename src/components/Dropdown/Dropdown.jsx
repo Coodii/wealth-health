@@ -1,15 +1,12 @@
 import React from 'react'
-
-function Dropdown(optionsList) {
-    console.log(optionsList);
+import './dropdown.css'
+function Dropdown({listOptions, handleChange, id}) {
   return (
-    <div>
-        <select>
-            {optionsList.map((value) =>
-                <option key={value.id}>{value.text}</option>
+        <select className='select' id={id} onChange={handleChange}>
+            {listOptions.map((value) =>
+                <option key={value.id}>{value.name}</option>
             )};
         </select>
-    </div>
   )
 }
 

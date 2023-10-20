@@ -1,22 +1,22 @@
 [
 	{   
         "id" : "1",
-		"value": "Sales"
+		"name": "Sales"
 	},
     {   
         "id" : "2",
-		"value": "Marketing"
+		"name": "Marketing"
 	},
     {   
         "id" : "3",
-		"value": "Engineering"
+		"name": "Engineering"
 	},
     {   
         "id" : "4",
-		"value": "Human Ressources"
+		"name": "Human Ressources"
 	},
     {   
         "id" : "5",
-		"value": "Legal"
+		"name": "Legal"
 	}
 ]
