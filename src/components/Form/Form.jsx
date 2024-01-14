@@ -7,11 +7,11 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import Modal from '../Modal/Modal';
 import { createEmployee } from '../../utility/employeeSlice';
 import { useDispatch } from 'react-redux';
 import { employee } from '../../models/employee';
 import dayjs from 'dayjs';
+import Modal from 'hrnet_modal_oc/dist/components/Modal';
 
 
 function Form() {
@@ -84,11 +84,11 @@ function Form() {
             <div className='identity'>
                     <div className="input-wrapper">
                         <label htmlFor="firstname">First Name</label>
-                        <input type="text" id="firstName" required onChange={handleChange} value={newEmployee.firstName} />
+                        <input minLength="3" type="text" id="firstName" required onChange={handleChange} value={newEmployee.firstName} />
                     </div>
                     <div className="input-wrapper">
                         <label htmlFor="lastname">Last Name</label>
-                        <input type="text" id="lastName" required onChange={handleChange} value={newEmployee.lastName}/>
+                        <input minLength="3" type="text" id="lastName" required onChange={handleChange} value={newEmployee.lastName}/>
                     </div>
                     <div className='input-wrapper'>
                     <label htmlFor="birthdate">Birthdate</label>
@@ -122,14 +122,13 @@ function Form() {
                     </div>
                     <div className="input-wrapper">
                         <label htmlFor="zipcode">Zipcode</label>
-                        <input type="text" id="zipcode" onChange={handleChange} value={newEmployee.zipcode} required/>
+                        <input minLength="6" type="number" id="zipcode" onChange={handleChange} value={newEmployee.zipcode} required/>
                     </div>
                     <div className="input-wrapper">
                         <label htmlFor="department">Department</label>
                         <Dropdown className='form_dropdown' listOptions={departments} handleChange={handleChange} id={'department'} value={newEmployee.department}/>
                     </div>
                 </div>
-                
                 <button className="save">SAVE</button>     
         </form>
     </div>
