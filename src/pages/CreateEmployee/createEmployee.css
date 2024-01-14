@@ -1,0 +1,12 @@
+.create_employee{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.create_employee_title{
+    color: #1976d2;
+    margin: 0;
+}

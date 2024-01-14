@@ -3,17 +3,14 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import {selectEmployees}  from '../../utility/employeeSlice';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { useNavigate } from 'react-router-dom';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
+import './employeesList.css';
 
 
 function EmployeesList() {
     
     const rows = useSelector(selectEmployees);
-    const navigate = useNavigate();
-
-    function routeChange (){  
-      navigate('/');
-    }
 
     const columns = [
       { field: 'firstName', headerName: 'First name'},
@@ -33,34 +30,37 @@ function EmployeesList() {
       },
       { field: 'street', headerName: 'Street' },
       { field: 'city', headerName: 'City'},
-      { field: 'state', headerName: 'State'},
+      { field: 'stateAbr', headerName: 'State'},
       { field: 'zipcode', headerName: 'Zip Code'},
     ]
       ;
 
-  
 
 
   return (
     <div>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 2 },
-          },
-        }}
-        getRowId={(row) => row.firstName}
-        pageSizeOptions={[2, 10]}
-        slots={{ toolbar: GridToolbar }}
-        slotProps={{
-          toolbar: {
-            showQuickFilter: true,
-          },
-        }}
-      />
-      <button className="save" onClick={routeChange}>Create Employee</button>
+      <Header/>
+      <main className = 'employees_list'>
+        <h2 className='employees_list_title'>Employees List</h2>
+        <DataGrid className='employees_list_tab'
+          rows={rows}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+          getRowId={(row) => row.firstName}
+          pageSizeOptions={[10, 20]}
+          slots={{ toolbar: GridToolbar }}
+          slotProps={{
+            toolbar: {
+              showQuickFilter: true,
+            },
+          }}
+        />
+      </main>
+      <Footer/>
     </div>
   )
 }

@@ -1,0 +1,11 @@
+.home{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.home_title{
+    color:  #1976d2;
+    
+}

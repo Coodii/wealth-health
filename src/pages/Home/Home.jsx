@@ -1,12 +1,18 @@
 import React from 'react'
-import Form from '../../components/Form/Form'
+import Header from '../../components/Header/Header'
+import './home.css'
+import Footer from '../../components/Footer/Footer'
 
 function Home() {
   return (
     <div>
-        <h1>HRnet</h1>
-        <h2>Create Employee</h2>
-        <Form/></div>
+        <Header/>
+        <main className='home'>
+          <h1 className='home_title'>Welcome on HRnet</h1>
+          <p className='home_description'>A website to manage your employees datas.</p>
+        </main>
+        <Footer/>
+    </div>
   )
 }
 

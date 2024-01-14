@@ -7,135 +7,130 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs from 'dayjs';
 import Modal from '../Modal/Modal';
 import { createEmployee } from '../../utility/employeeSlice';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { employee } from '../../models/employee';
+import dayjs from 'dayjs';
 
 
 function Form() {
     
-    const [startDate, setStartDate] = useState(dayjs());
-    const [birthDate, setBirthDate] = useState(dayjs());
-    const [openModal, setModal] = useState(false);
-    const navigate = useNavigate();
+    const [modal, setModal] = useState(false);
     
-    function routeChange (){
-        navigate('/employeesList')
-    }
-    const [form, setForm] = useState ({
-        firstName: "",
-        lastName: "",
-        startDate: "",
-        birthDate: "",
-        street: "",
-        city:"",
-        state:states[0].name,
-        zipcode:"",
-        department:departments[0].name
-    })
+    const [newEmployee, setNewEmployee] = useState({...employee})
+    const [birthDate, setBirthDate] = useState(dayjs())
+    const [startDate, setStartDate] = useState(dayjs())
     const dispatch = useDispatch();
 
-
+    //Handle change on input
     function handleChange(e){
-        setForm({
-            ...form,
-        [e.target.id]: e.target.value,
-        startDate: startDate.$d.toLocaleDateString(),
-        birthDate: birthDate.$d.toLocaleDateString(),     
+        setNewEmployee({
+            ...newEmployee,
+        [e.target.id]: e.target.value   
         })
     }
 
+    //handle change for birthdate
+    function changeBirthDate(e){
+        setBirthDate(e);
+        setNewEmployee({
+            ...newEmployee,
+        birthDate: e.$d.toLocaleDateString()  
+        })
+    }
+
+    //handle change for startDate
+    function changeStartDate(e){
+        setStartDate(e);
+        setNewEmployee({
+            ...newEmployee,
+        startDate: e.$d.toLocaleDateString()  
+        })
+    }
+
+
+    //handle change for state
+    function changeState(e){
+        const abbreviationState = states.find((state) => state.name === e.target.value).abbreviation;
+        setNewEmployee({
+            ...newEmployee,
+        [e.target.id]: e.target.value,
+        stateAbr : abbreviationState 
+        })
+        
+    }
+
+
+    //handle submit
     function handleSubmit(e){
-        console.log(form);
         dispatch(
             createEmployee(
             {
-                employee : form
+                employee : newEmployee
             })
         )
         setModal(true)
         e.preventDefault();
-        setForm({
-            firstName: "",
-            lastName: "",
-            startDate: "",
-            birthDate: "",
-            street: "",
-            city:"",
-            state:states[0].name,
-            zipcode:"",
-            department:departments[0].name
-        })
-        setBirthDate(dayjs());
-        setStartDate(dayjs());
+        setNewEmployee({...employee});
     }
 
 
 
   return (
     <div className='form_container'>
-        {openModal ? <Modal content={'Employee created'} closeModal={setModal}/> : null}
+        {modal ? <Modal title={'Employee created!'} content={'The employee has been added to the database.'} setModal={setModal}/> : null}
         <form className='form_content' onSubmit={handleSubmit}>
             <div className='identity'>
                     <div className="input-wrapper">
                         <label htmlFor="firstname">First Name</label>
-                        <input type="text" id="firstName" onChange={handleChange} value={form.firstName} required/>
+                        <input type="text" id="firstName" required onChange={handleChange} value={newEmployee.firstName} />
                     </div>
-                    <div className='line'></div>
                     <div className="input-wrapper">
                         <label htmlFor="lastname">Last Name</label>
-                        <input type="text" id="lastName" required onChange={handleChange} value={form.lastName}/>
+                        <input type="text" id="lastName" required onChange={handleChange} value={newEmployee.lastName}/>
                     </div>
-                    <div className='line'></div>
                     <div className='input-wrapper'>
                     <label htmlFor="birthdate">Birthdate</label>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer components={['DatePicker']}>
-                                <DatePicker slotProps={{ textField: { size: 'small', required: true } }} format="DD/MM/YYYY" value={birthDate} onChange={(newValue) => setBirthDate(newValue)}/>
+                                <DatePicker slotProps={{ textField: { size: 'small', required: true} }} format="DD/MM/YYYY" value={birthDate} onChange={(newValue) => changeBirthDate(newValue)}/>
                             </DemoContainer>
                         </LocalizationProvider>
                     </div>
-                    <div className='line'></div>
                     <div className='input-wrapper'>
                         <label htmlFor="startDate">Start Date</label>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer components={['DatePicker']}>
-                                <DatePicker slotProps={{ textField: { size: 'small', required: true } }} format="DD/MM/YYYY" value={startDate} onChange={(newValue) => setStartDate(newValue)}/>
+                                <DatePicker slotProps={{ textField: { size: 'small', required: true } }} format="DD/MM/YYYY" value={startDate} onChange={(newValue) => changeStartDate(newValue)}/>
                             </DemoContainer>
                         </LocalizationProvider>
                     </div>
-                    <div className='line'></div>
                 </div>
                 <div className='address'>
                     <div className="input-wrapper">
                         <label htmlFor="street">Street</label>
-                        <input type="text" id="street" onChange={handleChange} value={form.street} required/>
+                        <input type="text" id="street" onChange={handleChange} value={newEmployee.street} required/>
                     </div>
-                    <div className='line'></div>
                     <div className="input-wrapper">
                         <label htmlFor="city">City</label>
-                        <input type="text" id="city" onChange={handleChange} value={form.city} required/>
+                        <input type="text" id="city" onChange={handleChange} value={newEmployee.city} required/>
                     </div>
-                    <div className='line'></div>
                     <div className="input-wrapper">
                         <label htmlFor="state">State</label>
-                        <Dropdown className='form_dropdown' listOptions={states} handleChange={handleChange} id={'state'} value={form.state}/>
+                        <Dropdown className='form_dropdown' listOptions={states} handleChange={changeState} id={'state'} value={newEmployee.state}/>
                     </div>
-                    <div className='line'></div>
                     <div className="input-wrapper">
                         <label htmlFor="zipcode">Zipcode</label>
-                        <input type="text" id="zipcode" onChange={handleChange} value={form.zipcode} required/>
+                        <input type="text" id="zipcode" onChange={handleChange} value={newEmployee.zipcode} required/>
                     </div>
-                    <div className='line'></div>
+                    <div className="input-wrapper">
+                        <label htmlFor="department">Department</label>
+                        <Dropdown className='form_dropdown' listOptions={departments} handleChange={handleChange} id={'department'} value={newEmployee.department}/>
+                    </div>
                 </div>
-                <div className="input-wrapper">
-                    <label htmlFor="department">Department</label>
-                    <Dropdown className='form_dropdown' listOptions={departments} handleChange={handleChange} id={'department'} value={form.department}/>
-                </div>
-                <button className="save">SAVE</button>
-                <button className="save" onClick={routeChange}>Employees</button>        
+                
+                <button className="save">SAVE</button>     
         </form>
     </div>
   )

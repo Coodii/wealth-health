@@ -1,0 +1,13 @@
+.footer_content{
+    height: 80px;
+    background-color: rgb(43, 42, 42);
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.copyright{
+    color: white;
+    margin: 0;
+}
+

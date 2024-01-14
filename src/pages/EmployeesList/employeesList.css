@@ -1,0 +1,15 @@
+.employees_list{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.employees_list_title{
+    color: #1976d2;
+}
+
+.employees_list_tab{
+    width: 80%;
+}
