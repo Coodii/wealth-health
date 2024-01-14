@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 import Modal from '../Modal/Modal';
 import { createEmployee } from '../../utility/employeeSlice';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 
 
 function Form() {
@@ -18,6 +19,11 @@ function Form() {
     const [startDate, setStartDate] = useState(dayjs());
     const [birthDate, setBirthDate] = useState(dayjs());
     const [openModal, setModal] = useState(false);
+    const navigate = useNavigate();
+    
+    function routeChange (){
+        navigate('/employeesList')
+    }
     const [form, setForm] = useState ({
         firstName: "",
         lastName: "",
@@ -51,6 +57,19 @@ function Form() {
         )
         setModal(true)
         e.preventDefault();
+        setForm({
+            firstName: "",
+            lastName: "",
+            startDate: "",
+            birthDate: "",
+            street: "",
+            city:"",
+            state:states[0].name,
+            zipcode:"",
+            department:departments[0].name
+        })
+        setBirthDate(dayjs());
+        setStartDate(dayjs());
     }
 
 
@@ -62,12 +81,12 @@ function Form() {
             <div className='identity'>
                     <div className="input-wrapper">
                         <label htmlFor="firstname">First Name</label>
-                        <input type="text" id="firstName" onChange={handleChange} required/>
+                        <input type="text" id="firstName" onChange={handleChange} value={form.firstName} required/>
                     </div>
                     <div className='line'></div>
                     <div className="input-wrapper">
                         <label htmlFor="lastname">Last Name</label>
-                        <input type="text" id="lastName" required onChange={handleChange}/>
+                        <input type="text" id="lastName" required onChange={handleChange} value={form.lastName}/>
                     </div>
                     <div className='line'></div>
                     <div className='input-wrapper'>
@@ -92,30 +111,31 @@ function Form() {
                 <div className='address'>
                     <div className="input-wrapper">
                         <label htmlFor="street">Street</label>
-                        <input type="text" id="street" onChange={handleChange} required/>
+                        <input type="text" id="street" onChange={handleChange} value={form.street} required/>
                     </div>
                     <div className='line'></div>
                     <div className="input-wrapper">
                         <label htmlFor="city">City</label>
-                        <input type="text" id="city" onChange={handleChange} required/>
+                        <input type="text" id="city" onChange={handleChange} value={form.city} required/>
                     </div>
                     <div className='line'></div>
                     <div className="input-wrapper">
                         <label htmlFor="state">State</label>
-                        <Dropdown className='form_dropdown' listOptions={states} handleChange={handleChange} id={'state'}/>
+                        <Dropdown className='form_dropdown' listOptions={states} handleChange={handleChange} id={'state'} value={form.state}/>
                     </div>
                     <div className='line'></div>
                     <div className="input-wrapper">
                         <label htmlFor="zipcode">Zipcode</label>
-                        <input type="text" id="zipcode" onChange={handleChange} required/>
+                        <input type="text" id="zipcode" onChange={handleChange} value={form.zipcode} required/>
                     </div>
                     <div className='line'></div>
                 </div>
                 <div className="input-wrapper">
                     <label htmlFor="department">Department</label>
-                    <Dropdown className='form_dropdown' listOptions={departments} handleChange={handleChange} id={'department'}/>
+                    <Dropdown className='form_dropdown' listOptions={departments} handleChange={handleChange} id={'department'} value={form.department}/>
                 </div>
-                <button className="save">SAVE</button>         
+                <button className="save">SAVE</button>
+                <button className="save" onClick={routeChange}>Employees</button>        
         </form>
     </div>
   )
