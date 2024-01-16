@@ -64,6 +64,7 @@ function Form() {
 
     //handle submit
     function handleSubmit(e){
+        e.preventDefault();
         dispatch(
             createEmployee(
             {
@@ -71,7 +72,6 @@ function Form() {
             })
         )
         setModal(true)
-        e.preventDefault();
         setNewEmployee({...employee});
     }
 
