@@ -50,7 +50,7 @@ function EmployeesList() {
               paginationModel: { page: 0, pageSize: 10 },
             },
           }}
-          getRowId={(row) => row.firstName}
+          getRowId={(row) => row.employeeId}
           pageSizeOptions={[10, 20]}
           slots={{ toolbar: GridToolbar }}
           slotProps={{

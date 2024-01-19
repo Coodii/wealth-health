@@ -2,7 +2,6 @@ import dayjs from 'dayjs';
 import departments from '../assets/department.json'
 import states from '../assets/state.json'
 
-
 export const employee = {
     firstName: "",
     lastName: "",
@@ -13,9 +12,9 @@ export const employee = {
     state:states[0].name,
     stateAbr: states[0].abbreviation,
     zipcode:"",
-    department:departments[0].name
+    department:departments[0].name,
+    employeeId : ""
 }
-
 
 
 

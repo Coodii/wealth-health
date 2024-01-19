@@ -8,7 +8,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { createEmployee } from '../../utility/employeeSlice';
-import { useDispatch } from 'react-redux';
+import {selectEmployees}  from '../../utility/employeeSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { employee } from '../../models/employee';
 import dayjs from 'dayjs';
 import Modal from 'hrnet_modal_oc/dist/components/Modal';
@@ -17,6 +18,7 @@ import Modal from 'hrnet_modal_oc/dist/components/Modal';
 function Form() {
     
     const [modal, setModal] = useState(false);
+    const employees = useSelector(selectEmployees);
     
     const [newEmployee, setNewEmployee] = useState({...employee})
     const [birthDate, setBirthDate] = useState(dayjs())
@@ -27,7 +29,8 @@ function Form() {
     function handleChange(e){
         setNewEmployee({
             ...newEmployee,
-        [e.target.id]: e.target.value   
+        [e.target.id]: e.target.value,
+        employeeId : employees.length  
         })
     }
 
@@ -70,7 +73,7 @@ function Form() {
             {
                 employee : newEmployee
             })
-        )
+        );
         setModal(true)
         setNewEmployee({...employee});
     }
